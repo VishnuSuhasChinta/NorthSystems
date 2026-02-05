@@ -1,19 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --bg-color: #050505;
+    --bg-color: #000000;
     --text-main: #ffffff;
     --text-muted: #a1a1aa;
     --accent-color: #3b82f6;
-    /* Subtle blue */
-    --accent-glow: rgba(59, 130, 246, 0.5);
+    /* Blue for dark mode */
+    --accent-glow: rgba(59, 130, 246, 0.2);
     --border-color: #27272a;
-    --card-bg: #18181b;
+    --card-bg: #09090b;
+    --grid-color: rgba(255, 255, 255, 0.1);
+    --nav-bg: rgba(0, 0, 0, 0.8);
+    --tag-bg: rgba(255, 255, 255, 0.1);
+    --avatar-bg: #27272a;
+    --glass-bg: rgba(9, 9, 11, 0.6);
+    /* Semi-transparent version of card-bg */
 
     --container-width: 1200px;
     --header-height: 70px;
 
     --font-main: 'Inter', sans-serif;
+}
+
+[data-theme="light"] {
+    --bg-color: #f9fafb;
+    --text-main: #18181b;
+    --text-muted: #52525b;
+    --accent-color: #2563eb;
+    --accent-glow: rgba(37, 99, 235, 0.2);
+    --border-color: #e4e4e7;
+    --card-bg: #ffffff;
+    --grid-color: rgba(0, 0, 0, 0.03);
+    --nav-bg: rgba(255, 255, 255, 0.8);
+    --tag-bg: rgba(0, 0, 0, 0.05);
+    --avatar-bg: #f4f4f5;
+    --glass-bg: rgba(255, 255, 255, 0.6);
 }
 
 * {
@@ -28,6 +49,10 @@ html {
 
 body {
     background-color: var(--bg-color);
+    background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 24px 24px;
     color: var(--text-main);
     font-family: var(--font-main);
     -webkit-font-smoothing: antialiased;
@@ -53,8 +78,9 @@ ul {
 }
 
 .text-gradient {
-    background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+    background: linear-gradient(135deg, var(--text-main) 0%, var(--text-muted) 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -71,7 +97,7 @@ ul {
 
 .btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .btn-outline {
@@ -91,10 +117,10 @@ ul {
     left: 0;
     width: 100%;
     height: var(--header-height);
-    background: rgba(5, 5, 5, 0.8);
+    background: var(--nav-bg);
     backdrop-filter: blur(12px);
     z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .navbar .container {
@@ -122,6 +148,31 @@ ul {
 
 .nav-links a:hover {
     color: var(--text-main);
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    background-color: var(--border-color);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
 }
 
 /* Hero Section */
@@ -153,6 +204,12 @@ ul {
     color: var(--text-muted);
     max-width: 600px;
     margin: 0 auto 40px;
+}
+
+#contact {
+    background-color: var(--glass-bg);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 /* Background Effect (Subtle Glow) */
@@ -219,7 +276,7 @@ section {
 .tag {
     display: inline-block;
     padding: 4px 12px;
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--tag-bg);
     border-radius: 20px;
     font-size: 0.75rem;
     color: var(--text-muted);
@@ -235,10 +292,12 @@ section {
 
 .coming-soon-item {
     padding: 24px;
-    border: 1px dashed var(--border-color);
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     color: var(--text-muted);
     font-style: italic;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 /* Team */
@@ -259,7 +318,7 @@ section {
 .avatar {
     width: 100px;
     height: 100px;
-    background-color: #27272a;
+    background-color: var(--avatar-bg);
     border-radius: 50%;
     margin: 0 auto 20px;
     display: flex;
@@ -282,9 +341,12 @@ section {
 
 /* Footer */
 .footer {
-    border-top: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    color: var(--text-main);
     padding: 60px 0;
-    margin-top: 60px;
+    margin-top: 0;
+    border-top: 1px solid var(--border-color);
+    /* Removed margin since it now has a bg */
 }
 
 .footer-content {
@@ -294,13 +356,13 @@ section {
 }
 
 .footer-links a {
-    color: var(--text-muted);
+    color: #a1a1aa;
     margin-left: 24px;
     font-size: 0.9rem;
 }
 
 .footer-links a:hover {
-    color: var(--text-main);
+    color: #ffffff;
 }
 
 /* Animations */

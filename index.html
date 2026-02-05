@@ -23,6 +23,22 @@
                 <a href="#blog">Blog</a>
                 <a href="#team">Team</a>
                 <a href="#contact">Contact</a>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <!-- Sun Icon (Default shown for dark mode to switch to light) or Moon? -->
+                    <!-- Let's use a generic icon that transforms or just a simple sun/moon swap in JS. 
+                         Actually, usually show what you WILL switch to. Currently Dark -> show Sun. -->
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
             </div>
         </div>
     </nav>
@@ -74,7 +90,7 @@
     </section>
 
     <!-- Coming Soon / Roadmap -->
-    <section id="roadmap" style="background-color: rgba(255,255,255,0.02);">
+    <section id="roadmap">
         <div class="container">
             <h2 class="section-title animate-on-scroll">What's Next</h2>
             <p class="animate-on-scroll" style="color: var(--text-muted); margin-bottom: 40px; max-width: 600px;">We are
@@ -143,7 +159,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" style="background-color: rgba(255,255,255,0.02);">
+    <section id="contact">
         <div class="container animate-on-scroll" style="text-align: center;">
             <h2 class="section-title">Get In Touch</h2>
             <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 1.1rem;">Interested in what we are
