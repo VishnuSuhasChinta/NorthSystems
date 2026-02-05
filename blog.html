@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - North Systems</title>
+    <meta name="description" content="Thoughts and stories from North Systems">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>N</text></svg>">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">NORTH SYSTEMS</a>
+            <div class="nav-links">
+                <a href="projects.html" target="_blank">Projects</a>
+                <a href="blog.html" class="active" style="color: var(--text-main);">Blog</a>
+                <a href="index.html#team">Team</a>
+                <a href="index.html#contact">Contact</a>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Header -->
+    <header class="container" style="padding-top: 150px; padding-bottom: 50px; text-align: center;">
+        <h1 class="text-gradient" style="font-size: 3.5rem; font-weight: 700; margin-bottom: 20px;">The Blog</h1>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1.1rem;">
+            Documenting our journey, engineering challenges, and the future of tools.
+        </p>
+    </header>
+
+    <!-- Blog Grid -->
+    <section>
+        <div class="container">
+            <div class="projects-grid" id="blog-grid">
+                <!-- Blog posts will be loaded dynamically from content.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div style="font-weight: 700; font-size: 1.1rem;">North Systems</div>
+            <div class="footer-links">
+                <a href="#">Twitter/X</a>
+                <a href="#">GitHub</a>
+                <a href="#">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="content.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

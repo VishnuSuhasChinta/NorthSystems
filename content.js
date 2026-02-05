@@ -1,0 +1,50 @@
+// Blog Posts Data
+const blogPosts = [
+    {
+        tag: "Engineering",
+        title: "Building A Portfolio",
+        description: "Why we decided to start North Systems and our philosophy on work and business.",
+        content: `
+            <p>At North Systems, we frame our engineering philosophy through the lens of Venture Capital, success is a function of volume and quality. We embrace the reality that to find the outlier, we must weather the storm. We are willing to endure 90 failures and 9 average outcomes to forge that single, outstanding win.</p>
+            
+            <h3>Solving the Micro-Problem</h3>
+            <p>The modern stack is heavy. We are stripping it down. Our mission is to build small, high-leverage micro-tools that act as efficient, cost-effective alternatives to existing giants. We are our own first customers, building solutions to solve the pain points we face daily.</p>
+            
+            <h3>The Team</h3>
+            <p>We are a trio of engineers from IIIT-B, united by a bias for action. We believe in failing more, failing faster, and learning from every experience. We are not afraid to pivot, to iterate, and to push the boundaries of what is possible.</p>
+            
+            <h3>Manufacturing Luck</h3>                                                                                     
+            <p>We reject the notion that breakthrough ideas strike the passive observer. They are excavated through months of building and relentless experimentation. We believe in the "prepared mind", the state of readiness required to capture fleeting opportunities. We do not wait for luck to arrive; we manufacture it through the sheer volume of our output.</p>
+        `,
+        link: "#",
+        buttonText: "Read Article"
+    }
+];
+
+// Projects Data
+const projects = [
+    {
+        tag: "Live Beta",
+        title: "Oppen",
+        description: "Our flagship tool. Revolutionizing how you interact with open systems. A powerful utility built for speed and precision.",
+        link: "https://oppen.northsystems.org",
+        buttonText: "Visit Site",
+        isComingSoon: false
+    },
+    {
+        tag: "In Development",
+        title: "Project Polaris",
+        description: "A navigational aid for the modern web ecosystem. Stay tuned for updates.",
+        link: null,
+        buttonText: "Coming Soon",
+        isComingSoon: true
+    },
+    {
+        tag: "Concept",
+        title: "Vortex",
+        description: "Streamlining data workflows with an intuitive interface. currently in the research phase.",
+        link: null,
+        buttonText: "Researching",
+        isComingSoon: true
+    }
+];
