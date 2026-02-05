@@ -33,18 +33,18 @@ const projects = [
     },
     {
         tag: "In Development",
-        title: "Project Polaris",
-        description: "A navigational aid for the modern web ecosystem. Stay tuned for updates.",
+        title: "Millie",
+        description: "Copy paste one single line of code and get your own custom chatbot in your website.",
         link: null,
         buttonText: "Coming Soon",
         isComingSoon: true
     },
     {
         tag: "Concept",
-        title: "Vortex",
-        description: "Streamlining data workflows with an intuitive interface. currently in the research phase.",
+        title: "Axis",
+        description: "Data infrastructure for building Indian AI. Currently focusing on multilingual voice AI.",
         link: null,
-        buttonText: "Researching",
+        buttonText: "Coming Soon",
         isComingSoon: true
     }
 ];
