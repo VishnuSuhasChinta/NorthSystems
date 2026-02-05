@@ -75,11 +75,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Dynamic Content Loading
     const blogGrid = document.getElementById('blog-grid');
     const projectsGrid = document.getElementById('projects-grid');
+    const homeBlogGrid = document.getElementById('home-blog-grid');
 
     // Function to create a card element
     function createCard(item) {
         const card = document.createElement('div');
-        card.className = 'card animate-on-scroll';
+        card.className = 'card animate-on-scroll fade-in-up'; // Add fade-in-up immediately or let observer handle it? 
+        // original logic adds fade-in-up in the loop.
+        // Let's add it here to be consistent with how dynamic elements should start.
 
         // Tag
         const tag = document.createElement('span');
@@ -120,9 +123,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             } else {
                 btn.href = item.link;
+                if (item.link && item.link !== '#') {
+                    btn.target = "_blank";
+                }
             }
 
             card.appendChild(btn);
+        }
+
+        // Observe the new card for animation
+        if (typeof observer !== 'undefined') {
+            observer.observe(card);
         }
 
         return card;
@@ -176,21 +187,53 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'hidden'; // Prevent background scrolling
     }
 
-    // Render Blog Posts
-    if (blogGrid && typeof blogPosts !== 'undefined') {
-        blogPosts.forEach(post => {
-            const card = createCard(post);
-            blogGrid.appendChild(card);
-        });
-    }
+    // Fetch and Render Content from content.json
+    fetch('content.json')
+        .then(response => response.json())
+        .then(data => {
+            // Render Home Blog Preview (First item only) -- for index.html
+            if (homeBlogGrid && data.blogPosts && data.blogPosts.length > 0) {
+                homeBlogGrid.innerHTML = ''; // Clear any fallback content
+                const firstPost = data.blogPosts[0];
+                const card = createCard(firstPost);
+                homeBlogGrid.appendChild(card);
+            }
 
-    // Render Projects
-    if (projectsGrid && typeof projects !== 'undefined') {
-        projects.forEach(project => {
-            const card = createCard(project);
-            projectsGrid.appendChild(card);
+            // Render Blog Page (All items) -- for blog.html
+            if (blogGrid && data.blogPosts) {
+                blogGrid.innerHTML = '';
+                data.blogPosts.forEach(post => {
+                    const card = createCard(post);
+                    blogGrid.appendChild(card);
+                });
+            }
+
+            // Render Projects Page (All items) -- for projects.html
+            if (projectsGrid && data.projects) {
+                projectsGrid.innerHTML = '';
+                data.projects.forEach(project => {
+                    const card = createCard(project);
+                    projectsGrid.appendChild(card);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error loading content.json:', error);
+
+            // Fallback to global variables if fetch fails (backwards compatibility)
+            if (typeof blogPosts !== 'undefined' && blogGrid && blogGrid.children.length === 0) {
+                blogPosts.forEach(post => {
+                    const card = createCard(post);
+                    blogGrid.appendChild(card);
+                });
+            }
+            if (typeof projects !== 'undefined' && projectsGrid && projectsGrid.children.length === 0) {
+                projects.forEach(project => {
+                    const card = createCard(project);
+                    projectsGrid.appendChild(card);
+                });
+            }
         });
-    }
 
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
