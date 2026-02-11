@@ -431,8 +431,8 @@
                 Interested in what we are building? Want to collaborate? Drop us a line.
             </p>
             <a class="inline-block text-2xl md:text-5xl font-bold font-display uppercase hover:text-primary break-all underline decoration-4 underline-offset-8"
-                href="mailto:vishnusuhaschinta@northsystems.org">
-                vishnusuhaschinta@northsystems.org
+                href="mailto:vishnuchinta@northsystems.org">
+                vishnuchinta@northsystems.org
             </a>
             <div
                 class="mt-20 pt-8 border-t-2 border-white/20 dark:border-black/20 flex flex-col md:flex-row justify-between items-center text-sm font-mono opacity-60">
@@ -560,17 +560,17 @@
             fetch('content.json')
                 .then(response => response.json())
                 .then(data => {
-                    // Home blog preview (all posts, clicking navigates to blog.html)
+                    // Home blog preview (all posts, clicking opens modal)
                     if (homeBlogGrid && data.blogPosts && data.blogPosts.length > 0) {
                         homeBlogGrid.innerHTML = '';
                         data.blogPosts.forEach(post => {
                             const article = document.createElement('article');
                             article.className = 'border-4 border-white dark:border-black p-6 hover:bg-primary hover:border-primary dark:hover:border-primary transition-colors group cursor-pointer blog-card-dynamic';
 
-                            const date = document.createElement('span');
-                            date.className = 'font-mono text-xs opacity-60 mb-4 block blog-date';
-                            date.textContent = post.date || '';
-                            article.appendChild(date);
+                            const tag = document.createElement('span');
+                            tag.className = 'font-mono text-xs opacity-60 mb-2 block blog-date';
+                            tag.textContent = post.tag || '';
+                            article.appendChild(tag);
 
                             const title = document.createElement('h3');
                             title.className = 'font-display text-3xl uppercase leading-none mb-4 group-hover:text-black dark:group-hover:text-white';
@@ -587,9 +587,15 @@
                             readMore.textContent = 'Read More';
                             article.appendChild(readMore);
 
-                            article.addEventListener('click', () => {
-                                window.location.href = 'blog.html';
-                            });
+                            if (post.content) {
+                                article.addEventListener('click', () => {
+                                    showBlogModal(post);
+                                });
+                            } else {
+                                article.addEventListener('click', () => {
+                                    window.location.href = 'blog.html';
+                                });
+                            }
 
                             homeBlogGrid.appendChild(article);
                         });

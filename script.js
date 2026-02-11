@@ -209,11 +209,13 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('content.json')
         .then(response => response.json())
         .then(data => {
-            // Home blog preview (first post only)
+            // Home blog preview (all posts)
             if (homeBlogGrid && data.blogPosts && data.blogPosts.length > 0) {
                 homeBlogGrid.innerHTML = '';
-                const preview = createBlogPreview(data.blogPosts[0]);
-                homeBlogGrid.appendChild(preview);
+                data.blogPosts.forEach(post => {
+                    const preview = createBlogPreview(post);
+                    homeBlogGrid.appendChild(preview);
+                });
             }
 
             // Blog page (all posts)
