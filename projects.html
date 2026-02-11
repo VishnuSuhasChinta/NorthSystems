@@ -4,66 +4,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - North Systems</title>
-    <meta name="description" content="Our Portfolio - North Systems">
+    <title>Projects — North Systems</title>
+    <meta name="description" content="Our Portfolio — North Systems. Raw tools, no compromise.">
     <link rel="stylesheet" href="style.css">
     <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>N</text></svg>">
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22white%22>N</text></svg>">
 </head>
 
 <body>
 
+    <!-- Grid Background -->
+    <div class="bg-grid"></div>
+
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="container">
-            <a href="index.html" class="nav-logo">NORTH SYSTEMS</a>
-            <div class="nav-links">
-                <a href="projects.html" class="active" style="color: var(--text-main);">Projects</a>
-                <a href="blog.html" target="_blank">Blog</a>
-                <a href="index.html#team">Team</a>
-                <a href="index.html#contact">Contact</a>
-                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button>
+        <div class="navbar-inner">
+            <div class="nav-brand">
+                <a href="index.html">North Systems</a>
             </div>
+            <div class="nav-links">
+                <a href="projects.html" class="active">Projects</a>
+                <a href="blog.html">Blog</a>
+                <a href="index.html#team">Team</a>
+                <a href="index.html#contact" class="nav-cta">Contact</a>
+            </div>
+            <button class="nav-menu-btn" id="menu-toggle">Menu</button>
+        </div>
+        <div class="nav-mobile" id="mobile-nav">
+            <a href="projects.html" class="active">Projects</a>
+            <a href="blog.html">Blog</a>
+            <a href="index.html#team">Team</a>
+            <a href="index.html#contact" class="nav-cta">Contact</a>
         </div>
     </nav>
 
     <!-- Projects Header -->
-    <header class="container" style="padding-top: 150px; padding-bottom: 50px; text-align: center;">
-        <h1 class="text-gradient" style="font-size: 3.5rem; font-weight: 700; margin-bottom: 20px;">Our Projects</h1>
-        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1.1rem;">
-            A collection of our work, experiments, and open source contributions.
-        </p>
+    <header class="page-header">
+        <span class="section-label animate-on-scroll">Portfolio</span>
+        <h1 class="animate-on-scroll">Our<br>Projects</h1>
+        <p class="animate-on-scroll">A collection of our work, experiments, and open source contributions.</p>
     </header>
 
-    <!-- Projects Grid -->
-    <section>
-        <div class="container">
-            <div class="projects-grid" id="projects-grid">
-                <!-- Projects will be loaded dynamically from content.js -->
-            </div>
+    <!-- Projects List -->
+    <section style="padding: 0;">
+        <div class="projects-page-list" id="projects-grid">
+            <!-- Projects loaded dynamically from content.json -->
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container footer-content">
-            <div style="font-weight: 700; font-size: 1.1rem;">North Systems</div>
-            <div class="footer-links">
-                <a href="#">Twitter/X</a>
-                <a href="#">GitHub</a>
-                <a href="#">LinkedIn</a>
+    <footer class="contact-footer" style="margin-top: 80px;">
+        <div class="contact-inner">
+            <div class="footer-bar" style="margin-top: 0;">
+                <p class="footer-brand">© 2025 NORTH SYSTEMS.</p>
+                <div class="footer-links">
+                    <a href="#">Twitter</a>
+                    <a href="https://www.linkedin.com/company/northsystems/" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/Abolish135" target="_blank">GitHub</a>
+                </div>
             </div>
         </div>
     </footer>

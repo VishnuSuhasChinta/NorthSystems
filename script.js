@@ -1,155 +1,169 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Theme Toggle Logic
-    const themeToggle = document.getElementById('theme-toggle');
-    const htmlElement = document.documentElement;
-    const icon = themeToggle.querySelector('svg');
 
-    // Icons
-    const sunIcon = `
-        <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-    `;
+    // ---- MOBILE MENU TOGGLE ----
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileNav = document.getElementById('mobile-nav');
 
-    const moonIcon = `
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-    `;
+    if (menuToggle && mobileNav) {
+        menuToggle.addEventListener('click', () => {
+            mobileNav.classList.toggle('open');
+            menuToggle.textContent = mobileNav.classList.contains('open') ? 'Close' : 'Menu';
+        });
 
-    // Check for saved preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        htmlElement.setAttribute('data-theme', savedTheme);
-        updateIcon(savedTheme);
+        // Close mobile nav when a link is clicked
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('open');
+                menuToggle.textContent = 'Menu';
+            });
+        });
     }
 
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = htmlElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light'; // Default is dark (null/empty) or explicit 'dark'
-
-        if (newTheme === 'dark') {
-            htmlElement.removeAttribute('data-theme'); // Go back to root defaults (dark)
-            localStorage.setItem('theme', 'dark');
-            updateIcon('dark');
-        } else {
-            htmlElement.setAttribute('data-theme', 'light');
-            localStorage.setItem('theme', 'light');
-            updateIcon('light');
-        }
-    });
-
-    function updateIcon(theme) {
-        if (theme === 'light') {
-            icon.innerHTML = moonIcon; // In light mode, show moon to switch to dark
-        } else {
-            icon.innerHTML = sunIcon; // In dark mode, show sun to switch to light
-        }
-    }
-
-    // Intersection Observer for scroll animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
+    // ---- INTERSECTION OBSERVER (opacity-only reveal) ----
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                observer.unobserve(entry.target); // Only animate once
+                observer.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -40px 0px'
+    });
 
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    animatedElements.forEach(el => {
-        el.classList.add('fade-in-up');
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        el.classList.add('fade-in');
         observer.observe(el);
     });
 
-    // Dynamic Content Loading
+    // ---- DYNAMIC CONTENT LOADING ----
     const blogGrid = document.getElementById('blog-grid');
     const projectsGrid = document.getElementById('projects-grid');
     const homeBlogGrid = document.getElementById('home-blog-grid');
 
-    // Function to create a card element
-    function createCard(item) {
-        const card = document.createElement('div');
-        card.className = 'card animate-on-scroll fade-in-up'; // Add fade-in-up immediately or let observer handle it? 
-        // original logic adds fade-in-up in the loop.
-        // Let's add it here to be consistent with how dynamic elements should start.
+    // Create a blog preview block (for home page — inverted colors style)
+    function createBlogPreview(post) {
+        const block = document.createElement('div');
+        block.className = 'blog-preview animate-on-scroll fade-in';
 
-        // Tag
         const tag = document.createElement('span');
         tag.className = 'tag';
-        tag.textContent = item.tag;
-        card.appendChild(tag);
+        tag.textContent = post.tag;
+        block.appendChild(tag);
 
-        // Title
         const title = document.createElement('h3');
-        title.textContent = item.title;
-        card.appendChild(title);
+        title.textContent = post.title;
+        block.appendChild(title);
 
-        // Description
         const desc = document.createElement('p');
-        desc.textContent = item.description;
-        card.appendChild(desc);
+        desc.textContent = post.description;
+        block.appendChild(desc);
 
-        // Button/Action
-        if (item.isComingSoon) {
-            const btn = document.createElement('div');
-            btn.className = 'btn-outline';
-            btn.style.textAlign = 'center';
-            btn.style.borderStyle = 'dashed';
-            btn.style.pointerEvents = 'none';
-            btn.textContent = item.buttonText;
-            card.appendChild(btn);
-        } else {
+        if (post.content) {
             const btn = document.createElement('a');
+            btn.href = '#';
             btn.className = 'btn-outline';
-            btn.style.textAlign = 'center';
-            btn.textContent = item.buttonText;
+            btn.textContent = 'READ ARTICLE →';
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showBlogModal(post);
+            });
+            block.appendChild(btn);
 
-            if (item.content) {
-                btn.href = "#";
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    showBlogModal(item);
-                });
-            } else {
-                btn.href = item.link;
-                if (item.link && item.link !== '#') {
-                    btn.target = "_blank";
+            // Also open modal on card click
+            block.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'A') {
+                    showBlogModal(post);
                 }
-            }
-
-            card.appendChild(btn);
+            });
         }
 
-        // Observe the new card for animation
-        if (typeof observer !== 'undefined') {
-            observer.observe(card);
-        }
-
-        return card;
+        observer.observe(block);
+        return block;
     }
 
-    // Function to show blog modal ("Big Page")
+    // Create a blog list item (for blog page)
+    function createBlogItem(post) {
+        const item = document.createElement('div');
+        item.className = 'blog-item animate-on-scroll fade-in';
+
+        const tag = document.createElement('span');
+        tag.className = 'tag';
+        tag.textContent = post.tag;
+        item.appendChild(tag);
+
+        const title = document.createElement('h2');
+        title.textContent = post.title;
+        item.appendChild(title);
+
+        const desc = document.createElement('p');
+        desc.textContent = post.description;
+        item.appendChild(desc);
+
+        if (post.content) {
+            const link = document.createElement('span');
+            link.className = 'read-link';
+            link.textContent = 'READ ARTICLE →';
+            item.appendChild(link);
+
+            item.addEventListener('click', () => {
+                showBlogModal(post);
+            });
+        }
+
+        observer.observe(item);
+        return item;
+    }
+
+    // Create a project list item (for projects page)
+    function createProjectItem(project) {
+        const item = document.createElement('div');
+        item.className = 'projects-page-item animate-on-scroll fade-in';
+
+        const tag = document.createElement('span');
+        tag.className = 'tag';
+        tag.textContent = project.tag;
+        item.appendChild(tag);
+
+        const title = document.createElement('h2');
+        title.textContent = project.title;
+        item.appendChild(title);
+
+        const desc = document.createElement('p');
+        desc.textContent = project.description;
+        item.appendChild(desc);
+
+        if (!project.isComingSoon && project.link) {
+            const btn = document.createElement('a');
+            btn.href = project.link;
+            btn.target = '_blank';
+            btn.className = 'btn-outline';
+            btn.textContent = project.buttonText.toUpperCase() + ' →';
+            item.appendChild(btn);
+        } else {
+            const btn = document.createElement('span');
+            btn.className = 'btn-outline';
+            btn.style.opacity = '0.4';
+            btn.style.cursor = 'default';
+            btn.textContent = project.buttonText.toUpperCase();
+            item.appendChild(btn);
+        }
+
+        observer.observe(item);
+        return item;
+    }
+
+    // ---- BLOG MODAL ----
     function showBlogModal(post) {
         let modal = document.querySelector('.blog-modal');
 
-        // Create modal if it doesn't exist
         if (!modal) {
             modal = document.createElement('div');
             modal.className = 'blog-modal';
             modal.innerHTML = `
                 <div class="blog-modal-close" id="close-blog-modal">
-                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="square">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
@@ -165,77 +179,80 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             document.body.appendChild(modal);
 
-            // Close event listener
             modal.querySelector('#close-blog-modal').addEventListener('click', () => {
                 modal.classList.remove('visible');
-                document.body.style.overflow = ''; // Restore scrolling
+                document.body.style.overflow = '';
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('visible')) {
+                    modal.classList.remove('visible');
+                    document.body.style.overflow = '';
+                }
             });
         }
 
-        // Populate Content
         modal.querySelector('#modal-tag').textContent = post.tag;
         modal.querySelector('#modal-title').textContent = post.title;
         modal.querySelector('#modal-desc').textContent = post.description;
         modal.querySelector('#modal-body').innerHTML = post.content;
 
-        // Show Modal
-        // Small timeout to allow transition
         setTimeout(() => {
             modal.classList.add('visible');
         }, 10);
 
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        document.body.style.overflow = 'hidden';
     }
 
-    // Fetch and Render Content from content.json
+    // ---- FETCH CONTENT ----
     fetch('content.json')
         .then(response => response.json())
         .then(data => {
-            // Render Home Blog Preview (First item only) -- for index.html
+            // Home blog preview (first post only)
             if (homeBlogGrid && data.blogPosts && data.blogPosts.length > 0) {
-                homeBlogGrid.innerHTML = ''; // Clear any fallback content
-                const firstPost = data.blogPosts[0];
-                const card = createCard(firstPost);
-                homeBlogGrid.appendChild(card);
+                homeBlogGrid.innerHTML = '';
+                const preview = createBlogPreview(data.blogPosts[0]);
+                homeBlogGrid.appendChild(preview);
             }
 
-            // Render Blog Page (All items) -- for blog.html
+            // Blog page (all posts)
             if (blogGrid && data.blogPosts) {
                 blogGrid.innerHTML = '';
                 data.blogPosts.forEach(post => {
-                    const card = createCard(post);
-                    blogGrid.appendChild(card);
+                    const item = createBlogItem(post);
+                    blogGrid.appendChild(item);
                 });
             }
 
-            // Render Projects Page (All items) -- for projects.html
+            // Projects page (all projects)
             if (projectsGrid && data.projects) {
                 projectsGrid.innerHTML = '';
                 data.projects.forEach(project => {
-                    const card = createCard(project);
-                    projectsGrid.appendChild(card);
+                    const item = createProjectItem(project);
+                    projectsGrid.appendChild(item);
                 });
             }
         })
         .catch(error => {
             console.error('Error loading content.json:', error);
 
-            // Fallback to global variables if fetch fails (backwards compatibility)
+            // Fallback to global variables
             if (typeof blogPosts !== 'undefined' && blogGrid && blogGrid.children.length === 0) {
                 blogPosts.forEach(post => {
-                    const card = createCard(post);
-                    blogGrid.appendChild(card);
+                    const item = createBlogItem(post);
+                    blogGrid.appendChild(item);
                 });
             }
             if (typeof projects !== 'undefined' && projectsGrid && projectsGrid.children.length === 0) {
                 projects.forEach(project => {
-                    const card = createCard(project);
-                    projectsGrid.appendChild(card);
+                    const item = createProjectItem(project);
+                    projectsGrid.appendChild(item);
                 });
             }
         });
 
-    // Smooth scroll for anchor links
+    // ---- SMOOTH SCROLL FOR ANCHOR LINKS ----
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
